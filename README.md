@@ -9,6 +9,7 @@ It will try every combination of (different) number for the first four numbers o
 Exemple of a correct magic square of squares (but with repeating numbers):
 
  15² |   3² |  21²
+-----|------|-----
  21² |  15² |   3²
   3² |  21² |  15²
 
