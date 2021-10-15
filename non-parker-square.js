@@ -73,7 +73,7 @@ function generateMagicSquare(a, b, c, d) {
 }
 
 /**
- * Return a non parker magic square from the 4 first values, or false if not possible.
+ * Return a "non parker" magic square of sqaures from the 4 first values, or false if not possible.
  * aSquare, bSquare, cSquare, dSquare are a², b², c², d² precomputed for performance.
  */
 function generateNonParkerMagicSquare(a, b, c, d, aSquare, bSquare, cSquare, dSquare) {
