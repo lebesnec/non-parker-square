@@ -87,7 +87,7 @@ for (let i = 0; i <= LIMIT; i++) {
     ROOTS[i ** 2] = i;
 }
 
-let squares = [];
+const squares = [];
 
 console.log('Searching up to ' + LIMIT + '...');
 console.time('Duration');
