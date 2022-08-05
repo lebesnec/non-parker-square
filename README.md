@@ -1,4 +1,4 @@
-# non-parker-square
+# Non Parker square finder
 
 Trying to find a magic square of squares, see this video about the infamous "parker square" https://www.youtube.com/watch?v=aOT_bG-vWyg
 
