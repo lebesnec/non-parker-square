@@ -90,7 +90,7 @@ for (let c = 0; c <= LIMIT; c++) {
     const cSquare = c ** 2;
     for (let d = 0; d <= LIMIT; d++) {
         if (c === d) {
-            continue
+            continue;
         };
         const dSquare = d ** 2;
         const cd = cSquare - dSquare;
@@ -101,7 +101,7 @@ for (let c = 0; c <= LIMIT; c++) {
         }
         for (let a = 0; a <= LIMIT; a++) {
             if (a === d || a === c) {
-                continue
+                continue;
             };
             const aSquare = a ** 2;
             const acd = aSquare - cd;
@@ -115,7 +115,7 @@ for (let c = 0; c <= LIMIT; c++) {
             }
             for (let b = 0; b <= LIMIT; b++) {
                 if (b === d || b === c || b === a) {
-                    continue
+                    continue;
                 };
                 const bSquare = b ** 2;
                 const bcd = bSquare + cd;
