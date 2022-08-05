@@ -15,8 +15,7 @@ function printSquare(square) {
         ${formatNumber(square.d)} | ${formatNumber(square.e)} | ${formatNumber(square.f)}
         -----|------|-----
         ${formatNumber(square.g)} | ${formatNumber(square.h)} | ${formatNumber(square.i)}
-
-        Total is ${square.total}
+         Total is ${square.total}
     `);
 }
 
@@ -72,7 +71,7 @@ function generateMagicSquare(a, b, c, d) {
     }
 }
 
-const LIMIT = 10000;
+const LIMIT = 2000;
 
 // Precomputed square numbers and their root
 const ROOTS = {};
@@ -80,7 +79,7 @@ for (let i = 0; i <= LIMIT; i++) {
     ROOTS[i ** 2] = i;
 }
 
-let nbSquare = 0;
+let squares = [];
 
 console.log('Searching up to ' + LIMIT + '...');
 console.time('Duration');
@@ -132,16 +131,16 @@ for (let c = 0; c <= LIMIT; c++) {
                     const square = {
                         a, b, c,
                         d, e, f,
-                        g, h, i
+                        g, h, i,
+                        total
                     };
-                    square.total = total;
-                    printSquare(square);
-                    nbSquare ++;
+                    squares.push(square);
                 }
             }
         }
     }
-    console.log(c);
 }
-console.log(nbSquare + (nbSquare > 1 ? ' squares found.' : ' square found.'));
+
+squares.forEach(printSquare);
+console.log(squares.length + (squares.length > 1 ? ' squares found.' : ' square found.'));
 console.timeEnd('Duration');
