@@ -95,7 +95,7 @@ for (let c = 0; c <= LIMIT; c++) {
         const cd = cSquare - dSquare;
         const ccd = cSquare + cd;
         const h = ROOTS[ccd];
-        if (h == null) {
+        if (h === undefined) {
             continue;
         }
         for (let a = 0; a <= LIMIT; a++) {
@@ -105,11 +105,11 @@ for (let c = 0; c <= LIMIT; c++) {
             const aSquare = a ** 2;
             const acd = aSquare - cd;
             const e = ROOTS[acd];
-            if (e == null) {
+            if (e === undefined) {
                 continue;
             }
             const i = ROOTS[acd - cd];
-            if (i == null) {
+            if (i === undefined) {
                 continue;
             }
             for (let b = 0; b <= LIMIT; b++) {
@@ -121,11 +121,11 @@ for (let c = 0; c <= LIMIT; c++) {
                 const total = aSquare + bSquare + cSquare;
                 if (3 * acd === total) {
                     const g = ROOTS[bcd];
-                    if (g == null) {
+                    if (g === undefined) {
                         continue;
                     }
                     const f = ROOTS[bcd + cd];
-                    if (f == null) {
+                    if (f === undefined) {
                         continue;
                     }
                     squares.push({
