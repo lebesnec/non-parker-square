@@ -93,62 +93,6 @@ console.log('Searching up to ' + LIMIT + '...');
 console.time('Duration');
 
 // try every combination possible for the 4 values a, b, c, d
-
-// for (let a = 0; a <= LIMIT; a++) {
-//     const aSquare = a ** 2;
-//     for (let b = 0; b <= LIMIT; b++) {
-//         if (a === b) {
-//             continue;
-//         };
-//         const bSquare = b ** 2;
-//         for (let c = 0; c <= LIMIT; c++) {
-//             if (a === c || b === c) {
-//                 continue;
-//             };
-//             const cSquare = c ** 2;
-//             const total = aSquare + bSquare + cSquare;
-//             for (let d = 0; d <= LIMIT; d++) {
-//                 if (a === d || b === d || c === d) {
-//                     continue;
-//                 };
-//                 const dSquare = d ** 2;
-//                 const gSquare = total - dSquare - aSquare;
-//                 const g = ROOTS[gSquare];
-//                 if (g === undefined) {
-//                     continue;
-//                 }
-//                 const eSquare = total - gSquare - cSquare;
-//                 const e = ROOTS[eSquare];
-//                 if (e === undefined) {
-//                     continue;
-//                 }
-//                 const hSquare = total - eSquare - bSquare;
-//                 const h = ROOTS[hSquare];
-//                 if (h === undefined) {
-//                     continue;
-//                 }
-//                 const fSquare = total - dSquare - eSquare;
-//                 const f = ROOTS[fSquare];
-//                 if (f === undefined) {
-//                     continue;
-//                 }
-//                 const iSquare = total - gSquare - hSquare;
-//                 const i = ROOTS[iSquare];
-//                 if (i === undefined) {
-//                     continue;
-//                 }
-//                 squares.push({
-//                     a, b, c,
-//                     d, e, f,
-//                     g, h, i,
-//                     total
-//                 });
-//             }
-//         }
-//     }
-// }
-
-
 for (let c = 0; c <= LIMIT; c++) {
     const cSquare = c ** 2;
     for (let d = 0; d <= LIMIT; d++) {
