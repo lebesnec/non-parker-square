@@ -128,13 +128,12 @@ for (let c = 0; c <= LIMIT; c++) {
                     if (f == null) {
                         continue;
                     }
-                    const square = {
+                    squares.push({
                         a, b, c,
                         d, e, f,
                         g, h, i,
                         total
-                    };
-                    squares.push(square);
+                    });
                 }
             }
         }
