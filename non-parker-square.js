@@ -72,49 +72,12 @@ function generateMagicSquare(a, b, c, d) {
     }
 }
 
-const LIMIT = 200;
+const LIMIT = 10000;
 
 // Precomputed square numbers and their root
 const ROOTS = {};
 for (let i = 0; i <= LIMIT; i++) {
     ROOTS[i ** 2] = i;
-}
-
-/**
- * Return a "non parker" magic square of squares from the 4 first values, or false if not possible.
- * cd, acd, bcd, ccd are precomputed values for performance.
- */
-function generateNonParkerMagicSquare(a, b, c, d, cd, acd, bcd, ccd) {
-    const i = ROOTS[acd - cd];
-    if (!i) {
-        return false;
-    }
-
-    const f = ROOTS[bcd + cd];
-    if (!f) {
-        return false;
-    }
-
-    const e = ROOTS[acd];
-    if (!e) {
-        return false;
-    }
-
-    const g = ROOTS[bcd];
-    if (!g) {
-        return false;
-    }
-
-    const h = ROOTS[ccd];
-    if (!h) {
-        return false;
-    }
-
-    return {
-        a, b, c,
-        d, e, f,
-        g, h, i
-    };
 }
 
 let nbSquare = 0;
@@ -123,111 +86,56 @@ console.log('Searching up to ' + LIMIT + '...');
 console.time('Duration');
 
 // try every combination possible for the 4 values a, b, c, d
-for (let a = 0; a <= LIMIT; a++) {
-    const aSquare = a ** 2;
-    for (let b = 0; b <= LIMIT; b++) {
-        const bSquare = b ** 2;
-        for (let c = 0; c <= LIMIT; c++) {
-            const cSquare = c ** 2;
-            const maxD = Math.min(LIMIT, bSquare + cSquare);
-            const total = aSquare + bSquare + cSquare;
-            for (let d = 0; d <= maxD; d++) {
-                const dSquare = d ** 2;
-                const cd = cSquare - dSquare;
-                const acd = aSquare - cd;
+for (let c = 0; c <= LIMIT; c++) {
+    const cSquare = c ** 2;
+    for (let d = 0; d <= LIMIT; d++) {
+        if (c === d) continue;
+        const dSquare = d ** 2;
+        const cd = cSquare - dSquare;
+        const ccd = cSquare + cd;
+        const h = ROOTS[ccd];
+        if (h == null) {
+            continue;
+        }
+        for (let a = 0; a <= LIMIT; a++) {
+            if (a === d || a === c) continue;
+            const aSquare = a ** 2;
+            const acd = aSquare - cd;
+            const e = ROOTS[acd];
+            if (e == null) {
+                continue;
+            }
+            const i = ROOTS[acd - cd];
+            if (i == null) {
+                continue;
+            }
+            for (let b = 0; b <= LIMIT; b++) {
+                if (b === d || b === c || b === a) continue;
+                const bSquare = b ** 2;
                 const bcd = bSquare + cd;
-                const ccd = cSquare + cd;
-                if (3 * acd === total) {                                
-                    const square = generateNonParkerMagicSquare(a, b, c, d, cd, acd, bcd, ccd);
-                    square.total = total;
-                    if (square) {
-                        printSquare(square);
-                        nbSquare ++;
+                const total = aSquare + bSquare + cSquare;
+                if (3 * acd === total) {
+                    const g = ROOTS[bcd];
+                    if (g == null) {
+                        continue;
                     }
+                    const f = ROOTS[bcd + cd];
+                    if (f == null) {
+                        continue;
+                    }
+                    const square = {
+                        a, b, c,
+                        d, e, f,
+                        g, h, i
+                    };
+                    square.total = total;
+                    printSquare(square);
+                    nbSquare ++;
                 }
             }
         }
     }
+    console.log(c);
 }
 console.log(nbSquare + (nbSquare > 1 ? ' squares found.' : ' square found.'));
 console.timeEnd('Duration');
-
-
-
-// /**
-//  * Return a "non parker" magic square of squares from the 4 first values, or false if not possible.
-//  * aSquare, bSquare, cSquare, dSquare are a², b², c², d² precomputed for performance.
-//  */
-//  function generateNonParkerMagicSquare(a, b, c, d, aSquare, bSquare, cSquare, dSquare) {
-//     const square = {
-//         a: a, b: b, c: c,
-//         d: d, e: 0, f: 0,
-//         g: 0, h: 0, i: 0
-//     };
-
-//     square.i = Math.sqrt(aSquare + 2 * dSquare - 2 * cSquare);
-//     if (!Number.isInteger(square.i)) {
-//         return false;
-//     }
-
-//     square.f = Math.sqrt(bSquare + 2 * cSquare - 2 * dSquare);
-//     if (!Number.isInteger(square.f)) {
-//         return false;
-//     }
-
-//     square.e = Math.sqrt(aSquare - cSquare + dSquare);
-//     if (!Number.isInteger(square.e)) {
-//         return false;
-//     }
-
-//     square.g = Math.sqrt(bSquare + cSquare - dSquare);
-//     if (!Number.isInteger(square.g)) {
-//         return false;
-//     }
-
-//     square.h = Math.sqrt(2 * cSquare - dSquare);
-//     if (!Number.isInteger(square.h)) {
-//         return false;
-//     }
-
-//     return square;
-// }
-
-// const LIMIT = 200;
-// let nbSquare = 0;
-
-// console.time('Duration');
-
-// // try every combination possible for the the 4 values a, b, c, d with a ≠ b ≠ c ≠ d
-// for (let a = 0; a <= LIMIT; a++) {
-//     console.log(a);
-//     console.timeLog('Duration');
-//     const aSquare = a ** 2;
-//     for (let b = 0; b <= LIMIT; b++) {
-//         // if (a !== b) {
-//             const bSquare = b ** 2;
-//             for (let c = 0; c <= LIMIT; c++) {
-//                 // if (a !== c && b !== c) {
-//                     const cSquare = c ** 2;
-//                     const maxD = Math.min(LIMIT, bSquare + cSquare);
-//                     const total = aSquare + bSquare + cSquare;
-//                     for (let d = 0; d <= maxD; d++) {
-//                         // if (a !== d && b !== d && c !== d) {
-//                             const dSquare = d ** 2;
-//                             if (3 * aSquare + 3 * dSquare - 3 * cSquare === total) {
-//                                 const square = generateNonParkerMagicSquare(a, b, c, d, aSquare, bSquare, cSquare, dSquare);
-//                                 if (square) {
-//                                     printSquare(square);
-//                                     console.timeLog('Duration');
-//                                     nbSquare ++;
-//                                 }
-//                             }
-//                         // }
-//                     }
-//                 // }
-//             }
-//         // }
-//     }
-// }
-// console.log(nbSquare + (nbSquare > 1 ? ' squares found.' : ' square found.'));
-// console.timeEnd('Duration');
