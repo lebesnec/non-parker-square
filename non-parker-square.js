@@ -82,9 +82,9 @@ function generateMagicSquare(a, b, c, d) {
 const LIMIT = process.argv[2] ?? 1000;
 
 // Precomputed square numbers and their root
-const ROOTS = {};
+const ROOTS = new Map();
 for (let i = 0; i <= LIMIT; i++) {
-    ROOTS[i ** 2] = i;
+    ROOTS.set(i ** 2, i);
 }
 
 const squares = [];
@@ -102,7 +102,7 @@ for (let c = 0; c <= LIMIT; c++) {
         const dSquare = d ** 2;
         const cd = cSquare - dSquare;
         const ccd = cSquare + cd;
-        const h = ROOTS[ccd];
+        const h = ROOTS.get(ccd);
         if (h === undefined) {
             continue;
         }
@@ -112,11 +112,11 @@ for (let c = 0; c <= LIMIT; c++) {
             };
             const aSquare = a ** 2;
             const acd = aSquare - cd;
-            const e = ROOTS[acd];
+            const e = ROOTS.get(acd);
             if (e === undefined) {
                 continue;
             }
-            const i = ROOTS[acd - cd];
+            const i = ROOTS.get(acd - cd);
             if (i === undefined) {
                 continue;
             }
@@ -128,11 +128,11 @@ for (let c = 0; c <= LIMIT; c++) {
                 const bcd = bSquare + cd;
                 const total = aSquare + bSquare + cSquare;
                 if (3 * acd === total) {
-                    const g = ROOTS[bcd];
+                    const g = ROOTS.get(bcd);
                     if (g === undefined) {
                         continue;
                     }
-                    const f = ROOTS[bcd + cd];
+                    const f = ROOTS.get(bcd + cd);
                     if (f === undefined) {
                         continue;
                     }
