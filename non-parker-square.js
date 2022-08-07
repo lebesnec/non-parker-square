@@ -83,7 +83,7 @@ const LIMIT = process.argv[2] ?? 10000;
 
 // Precomputed square numbers and their root
 const ROOTS = new Map();
-for (let i = 0; i <= LIMIT; i++) {
+for (let i = 0; i <= Math.round(Math.sqrt(3 * (LIMIT ** 2))); i++) {
     ROOTS.set(i ** 2, i);
 }
 
