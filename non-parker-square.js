@@ -79,7 +79,7 @@ function generateMagicSquare(a, b, c, d) {
     }
 }
 
-const LIMIT = process.argv[2] ?? 1000;
+const LIMIT = process.argv[2] ?? 10000;
 
 // Precomputed square numbers and their root
 const ROOTS = new Map();
