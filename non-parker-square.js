@@ -1,8 +1,59 @@
+// For the following square (where a, b, c, d, e, f, g, h and i are perfect squares):
 //  a | b | c
 //  --|---|--
 //  d | e | f
 //  --|---|--
 //  g | h | i
+//
+// We have the following equations labelled from [1] to [8]
+// a + b + c = total [1] *
+// d + e + f = total [2] *
+// g + h + i = total [3] *
+// a + d + g = total [4] *
+// b + e + h = total [5] *
+// c + f + i = total [6]
+// a + e + i = total [7]
+// g + e + c = total [8] *
+//
+// e, f, g, h and i can be calculated from a/b/c/d alone:
+//
+// [4] => g = total - a - d 
+// [1] => g = b + c - d [9] *
+//
+// [8] => e = total - g - c 
+// [1] => e = a + b - g
+// [9] => e = a - c + d [10] *
+//
+// [2] => f = total - d - e
+// [1] => f = a + b + c - d - e
+// [10] => f = b + 2 * c - 2 * d [11] *
+//
+// [5] => h = total - b - e
+// [1] => h = a + c - e
+// [10] => h = 2 * c - d [12] *
+//
+// [3] => i = total - g - h
+// [1] => i = a + b + c - g - h
+// [9 & 11] => i = a + 2 * d - 2 * c [13] *
+//
+// We can define "cd" as:
+// cd = c - d [14]
+//
+// Then e, f, g, h and i can be calculated from cd/a/b/c:
+// [12 & 14] => h = c + cd
+// [10 & 14] => e = a - cd
+// [13 & 14] => i = a - 2 * cd
+// [9 & 14] => g = b + cd
+// [11 & 14] => f = b + 2 * cd
+
+// ccd = c + cd
+// acd = a - cd
+// bcd = b + cd
+
+//// [7] => a = total - e - i
+//// [6] => a = c + f - e
+//// [???] => a = (b + 4 * c - 3 * d) / 2;
+
 
 function format(x, padLength) {
     return ('' + x).padStart(padLength, ' ');
@@ -27,59 +78,7 @@ function printSquare(square) {
     `);
 }
 
-// a + b + c = total *
-// d + e + f = total *
-// g + h + i = total *
-// a + d + g = total *
-// b + e + h = total *
-// c + f + i = total  *
-// a + e + i = total  *
-// g + e + c = total *
-
-/**
- * Return a "classic" magic square from the 4 first values, or false if not possible.
- */
-function generateMagicSquare(a, b, c, d) {
-    const square = {
-        a: a, b: b, c: c,
-        d: d, e: 0, f: 0,
-        g: 0, h: 0, i: 0
-    };
-
-    const total = square.a + square.b + square.c;
-
-    // square.g = total - square.a - square.d;
-    square.g = square.b + square.c - square.d;
-
-    // square.e = total - square.g - square.c;
-    // square.e = square.a + square.b - square.g;
-    square.e = square.a - square.c + square.d;
-
-    // square.f = total - square.d - square.e;
-    // square.f = square.a + square.b + square.c - square.d - square.e;
-    square.f = square.b + 2 * square.c - 2 * square.d;
-
-    // square.h = total - square.b - square.e;
-    // square.h = square.a + square.c - square.e;
-    square.h = 2 * square.c - square.d;
-
-    // square.i = total - square.g - square.h;
-    // square.i = square.a + square.b + square.c - square.g - square.h;
-    square.i = square.a + 2 * square.d - 2 * square.c;
-
-    // square.a = total - square.e - square.i;
-    // square.a = square.c + square.f - square.e;
-    // square.a = (square.b + 4 * square.c - 3 * square.d) / 2;
-
-    if ((square.c + square.f + square.i === total) &&
-        (square.a + square.e + square.i === total)) {
-        return square;
-    } else {
-        return false;
-    }
-}
-
-const LIMIT = process.argv[2] ?? 10000;
+const LIMIT = process.argv[2] ?? 10000;;
 
 // Precomputed square numbers and their root
 const ROOTS = new Map();
