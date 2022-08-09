@@ -45,10 +45,20 @@
 // [13 & 14] => i = a - 2 * cd
 // [9 & 14] => g = b + cd
 // [11 & 14] => f = b + 2 * cd
+//
+// 
 
-// ccd = c + cd
-// acd = a - cd
-// bcd = b + cd
+
+
+// h² = 2 * c² - d²
+// c=d => h² = c² => h = c
+
+// c=d+k => 2 * (d+k)² - d² = 2 * (d² + 2*d*k + k²) - d² = 2d² + 4dk + 2k² - d² = d² + 4dk + 2k²
+
+// h² = 2 * c² - d² = c² + c² - d² = c² + (c + d)(c - d)
+
+// c=k*d => 2 * k*d * k*d - d * d = d² * (2*k - 1)
+
 
 //// [7] => a = total - e - i
 //// [6] => a = c + f - e
@@ -100,8 +110,7 @@ for (let c = 0; c <= LIMIT; c++) {
         };
         const dSquare = d ** 2;
         const cd = cSquare - dSquare;
-        const ccd = cSquare + cd;
-        const h = ROOTS.get(ccd);
+        const h = ROOTS.get(cSquare + cd);
         if (h === undefined) {
             continue;
         }
@@ -110,12 +119,11 @@ for (let c = 0; c <= LIMIT; c++) {
                 continue;
             };
             const aSquare = a ** 2;
-            const acd = aSquare - cd;
-            const e = ROOTS.get(acd);
+            const e = ROOTS.get(aSquare - cd);
             if (e === undefined) {
                 continue;
             }
-            const i = ROOTS.get(acd - cd);
+            const i = ROOTS.get(aSquare - 2 * cd);
             if (i === undefined) {
                 continue;
             }
@@ -124,14 +132,16 @@ for (let c = 0; c <= LIMIT; c++) {
                     continue;
                 };
                 const bSquare = b ** 2;
-                const bcd = bSquare + cd;
                 const total = aSquare + bSquare + cSquare;
-                if (3 * acd === total) {
-                    const g = ROOTS.get(bcd);
+                // if (3 * aSquare + 3 * dSquare - 3 * cSquare === total) {
+                    // if (3 * (aSquare + dSquare - cSquare)) === total) {
+                        // if (3 * (aSquare -cd²)) === total) {
+                if (3 * (aSquare - cd) === total) {// TODO
+                    const g = ROOTS.get(bSquare + cd);
                     if (g === undefined) {
                         continue;
                     }
-                    const f = ROOTS.get(bcd + cd);
+                    const f = ROOTS.get(bSquare + 2 * cd);
                     if (f === undefined) {
                         continue;
                     }
