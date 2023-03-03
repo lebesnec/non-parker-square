@@ -61,7 +61,7 @@ function isMagicSquareOfSquare(square) {
     return r1 === r2 && r1 === r3 && r1 === c1 && r1 === c2 && r1 === c3 && r1 === d1 && r1 === d2;
 }
 
-const LIMIT = process.argv[2] ?? 1000;
+const LIMIT = process.argv[2] ?? 10000;
 
 // Precomputed square numbers and their root
 const ROOTS = new Map();
@@ -80,24 +80,28 @@ const squares = [];
 console.log('Searching up to e = ' + LIMIT + ' (or e² = ' + (LIMIT ** 2) + ')...');
 console.time('Duration');
 
+// change the conditions n > 0 and m > 0 to n >= 0 and m >= 0 to include squares with recuring numbers
 ROOTS.forEach((e, eCube) => {
     if (e <= LIMIT) {
-        for (let n = 1; n < eCube; n++) { // start from 1 to avoid e² = a² = i², stop at e² to avoid negative number since e² - n = i²
-            if (isCube(eCube + n) && isCube(eCube - n)) {
-                for (let m = 1; m < eCube; m++) { // start from 1 to avoid e² = g² = c², stop at e² to avoid negative number since e² - m = g²
-                    if (isCube(eCube + m) && isCube(eCube - m) && isCube(eCube - n - m) && isCube(eCube - n + m) && isCube(eCube + n - m) && isCube(eCube + n + m)) {
-                        const square = {
-                            a: ROOTS.get(eCube + n),     b: ROOTS.get(eCube - n - m), c: ROOTS.get(eCube + m),
-                            d: ROOTS.get(eCube - n + m), e: ROOTS.get(eCube),         f: ROOTS.get(eCube + n - m),
-                            g: ROOTS.get(eCube - m),     h: ROOTS.get(eCube + n + m), i: ROOTS.get(eCube - n)
-                        };
-                        if (isMagicSquareOfSquare(square)) {
-                            squares.push(square);
+        ROOTS.forEach((a, aCube) => {
+            const n = aCube - eCube;
+            const iCube = eCube - n;
+            if (n > 0 && iCube >= 0 && isCube(iCube)) {
+                ROOTS.forEach((c, cCube) => {
+                    const m = cCube - eCube;
+                    const gCube = eCube - m;
+                    if (m > 0 && gCube >= 0 && isCube(gCube)) {
+                        if (isCube(eCube - n - m) && isCube(eCube - n + m) && isCube(eCube + n - m) && isCube(eCube + n + m)) {
+                            squares.push({
+                                a,                           b: ROOTS.get(eCube - n - m), c,
+                                d: ROOTS.get(eCube - n + m), e,                           f: ROOTS.get(eCube + n - m),
+                                g: ROOTS.get(gCube),         h: ROOTS.get(eCube + n + m), i: ROOTS.get(iCube)
+                            });
                         }
                     }
-                }
+                });
             }
-        }
+        });
     }
 });
 
