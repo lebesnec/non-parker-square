@@ -1,6 +1,6 @@
 {
   "name": "non-parker-square",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Trying to find a magic square of squares, see https://www.youtube.com/watch?v=aOT_bG-vWyg",
   "main": "non-parker-square.js",
   "scripts": {
