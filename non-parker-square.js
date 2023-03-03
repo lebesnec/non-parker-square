@@ -12,7 +12,7 @@
 //  ---|----|---
 //  g² | h² | i²
 //
-// which can also be exprimed as:
+// which can also be expressed as:
 // e² + n     | e² - n - m | e² + m
 // -----------|------------|-----------
 // e² - n + m | e²         | e² + n - m
@@ -64,9 +64,10 @@ function isMagicSquareOfSquare(square) {
 const LIMIT = process.argv[2] ?? 1000;
 
 // Precomputed square numbers and their root
-console.log('Precomputing roots...');
 const ROOTS = new Map();
-for (let i = 0; i <= 3 * LIMIT; i++) {
+// Precompute up to sqrt(2) * LIMIT because total = 3 * e² and since we already have e² in the
+// center that leave a maximum of (3 * e²) - e² = 2 * e² for the square in the other cells:
+for (let i = 0; i <= Math.ceil(Math.sqrt(2) * LIMIT); i++) {
     ROOTS.set(i ** 2, i);
 }
 
