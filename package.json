@@ -2,9 +2,23 @@
   "name": "non-parker-square",
   "version": "2.0.0",
   "description": "Trying to find a magic square of squares, see https://www.youtube.com/watch?v=aOT_bG-vWyg",
+  "keywords": [
+    "javascript",
+    "mathematics",
+    "magic square"
+  ],
+  "author": {
+    "name": "Christophe Le Besnerais",
+    "email": "christophe.lebesnerais.pro@gmail.com",
+    "url": "https://github.com/lebesnec"
+  },
+  "homepage": "https://github.com/lebesnec/non-parker-square",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lebesnec/non-parker-square"
+  },
   "main": "non-parker-square.js",
   "scripts": {
     "start": "node --max_old_space_size=100000 non-parker-square.js"
-  },
-  "author": "Christophe Le Besnerais"
+  }
 }
