@@ -66,7 +66,7 @@ const LIMIT = process.argv[2] ?? 10000;
 // Precomputed square numbers and their root
 const ROOTS = new Map();
 // Precompute up to sqrt(2) * LIMIT because total = 3 * e² and since we already have e² in the
-// center that leave a maximum of (3 * e²) - e² = 2 * e² for the square in the other cells:
+// center that leave a maximum of (3 * e²) - e² = 2 * e² for the squares in the other cells:
 for (let i = 0; i <= Math.ceil(Math.sqrt(2) * LIMIT); i++) {
     ROOTS.set(i ** 2, i);
 }
