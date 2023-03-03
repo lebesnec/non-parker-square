@@ -71,10 +71,6 @@ for (let i = 0; i <= Math.ceil(Math.sqrt(2) * LIMIT); i++) {
     ROOTS.set(i ** 2, i);
 }
 
-function isCube(x) {
-    return ROOTS.get(x) !== undefined;
-}
-
 const squares = [];
 
 console.log('Searching up to e = ' + LIMIT + ' (or e² = ' + (LIMIT ** 2) + ')...');
@@ -86,12 +82,12 @@ ROOTS.forEach((e, eCube) => {
         ROOTS.forEach((a, aCube) => {
             const n = aCube - eCube;
             const iCube = eCube - n;
-            if (n > 0 && iCube >= 0 && isCube(iCube)) {
+            if (n > 0 && iCube >= 0 && ROOTS.has(iCube)) {
                 ROOTS.forEach((c, cCube) => {
                     const m = cCube - eCube;
                     const gCube = eCube - m;
-                    if (m > 0 && gCube >= 0 && isCube(gCube)) {
-                        if (isCube(eCube - n - m) && isCube(eCube - n + m) && isCube(eCube + n - m) && isCube(eCube + n + m)) {
+                    if (m > 0 && gCube >= 0 && ROOTS.has(gCube)) {
+                        if (ROOTS.has(eCube - n - m) && ROOTS.has(eCube - n + m) && ROOTS.has(eCube + n - m) && ROOTS.has(eCube + n + m)) {
                             squares.push({
                                 a,                           b: ROOTS.get(eCube - n - m), c,
                                 d: ROOTS.get(eCube - n + m), e,                           f: ROOTS.get(eCube + n - m),
