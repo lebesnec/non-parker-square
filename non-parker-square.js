@@ -81,17 +81,15 @@ ROOTS.forEach((e, eCube) => {
     if (e <= LIMIT) {
         ROOTS.forEach((a, aCube) => {
             const n = aCube - eCube;
-            const iCube = eCube - n;
-            if (n > 0 && iCube >= 0 && ROOTS.has(iCube)) {
+            if (n > 0 && n <= eCube && ROOTS.has(eCube - n)) {
                 ROOTS.forEach((c, cCube) => {
                     const m = cCube - eCube;
-                    const gCube = eCube - m;
-                    if (m > 0 && gCube >= 0 && ROOTS.has(gCube)) {
+                    if (m > 0 && m <= eCube && ROOTS.has(eCube - m)) {
                         if (ROOTS.has(eCube - n - m) && ROOTS.has(eCube - n + m) && ROOTS.has(eCube + n - m) && ROOTS.has(eCube + n + m)) {
                             squares.push({
                                 a,                           b: ROOTS.get(eCube - n - m), c,
                                 d: ROOTS.get(eCube - n + m), e,                           f: ROOTS.get(eCube + n - m),
-                                g: ROOTS.get(gCube),         h: ROOTS.get(eCube + n + m), i: ROOTS.get(iCube)
+                                g: ROOTS.get(eCube - m),     h: ROOTS.get(eCube + n + m), i: ROOTS.get(eCube - n)
                             });
                         }
                     }
