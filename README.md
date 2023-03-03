@@ -14,5 +14,12 @@ Exemple of a correct magic square of squares (but with repeating numbers):
 -----|------|-----
  21² |  15² |   3²
   3² |  21² |  15²
+ 
+ which give
+  
+ 225 |    9 |  441
+-----|------|-----
+ 441 |  225 |    9
+   9 |  441 |  225
 
 where the sum of every rows, columns and diagonals is equal to 675.
