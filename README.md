@@ -1,6 +1,6 @@
 # Non Parker square finder
 
-Trying to find a magic square of square numbers, see [this video about the infamous "parker square"](https://www.youtube.com/watch?v=aOT_bG-vWyg)
+Trying to find a magic square of square numbers, see [this video about the infamous "Parker square"](https://www.youtube.com/watch?v=aOT_bG-vWyg)
 
 This algorithm will try every possible values for the central number of a 3x3 square (up to a given limit), and print every magic square (with no repeating numbers) it find.
 
