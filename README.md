@@ -4,7 +4,7 @@ Trying to find a magic square of square numbers, see [this video about the infam
 
 This algorithm will try every possible values for the central number of a 3x3 square (up to a given limit), and print every magic square (with no repeating numbers) it find.
 
-To run this script install node.js and use `npm start` to try every possible values <= 10000 for the central "un-squared" value of the square.
+To run this script install node.js, run `npm install` and then use `npm start` to try every possible values <= 10000 for the central "un-squared" value of the square.
 You can also use the first argument for a higher limit, ex: `npm start 50000`. I haven't found anything yet :(
 For some reason it's actually way faster to run the js script directly in the Chrome console.
 

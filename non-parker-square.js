@@ -1,3 +1,5 @@
+const cliProgress = require('cli-progress');
+
 // The squares are labelled as such:
 //  a | b | c
 //  --|---|--
@@ -62,6 +64,7 @@ function isMagicSquareOfSquare(square) {
 }
 
 const LIMIT = process.argv[2] ?? 10000;
+const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 // Precomputed square numbers and their root
 const ROOTS = new Map();
@@ -73,12 +76,14 @@ for (let i = 0; i <= Math.ceil(Math.sqrt(2) * LIMIT); i++) {
 
 const squares = [];
 
-console.log('Searching up to e = ' + LIMIT + ' (or e² = ' + (LIMIT ** 2) + ')...');
+console.log('Searching up to e = ' + LIMIT + ' (or e² = ' + (LIMIT ** 2) + ')...\n');
 console.time('Duration');
+progress.start(LIMIT, 0);
 
 // change the conditions n > 0 and m > 0 to n >= 0 and m >= 0 to include squares with recuring numbers
 ROOTS.forEach((e, eCube) => {
     if (e <= LIMIT) {
+        progress.increment();
         ROOTS.forEach((a, aCube) => {
             const n = aCube - eCube;
             if (n > 0 && n <= eCube && ROOTS.has(eCube - n)) {
@@ -99,6 +104,7 @@ ROOTS.forEach((e, eCube) => {
     }
 });
 
+progress.stop();
 squares.forEach(printSquare);
 console.log(squares.length + (squares.length > 1 ? ' squares found.' : ' square found.'));
 console.timeEnd('Duration');

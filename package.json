@@ -20,5 +20,8 @@
   "main": "non-parker-square.js",
   "scripts": {
     "start": "node --max_old_space_size=100000 non-parker-square.js"
+  },
+  "dependencies": {
+    "cli-progress": "^3.12.0"
   }
 }
