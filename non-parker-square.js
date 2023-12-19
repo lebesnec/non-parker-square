@@ -47,6 +47,8 @@ function printSquare(square) {
         c² + f² + i² = ${square.c}² + ${square.f}² + ${square.i}² = ${square.c ** 2} + ${square.f ** 2} + ${square.i ** 2} = ${(square.c ** 2) + (square.f ** 2) + (square.i ** 2)}
         a² + e² + i² = ${square.a}² + ${square.e}² + ${square.i}² = ${square.a ** 2} + ${square.e ** 2} + ${square.i ** 2} = ${(square.a ** 2) + (square.e ** 2) + (square.i ** 2)}
         g² + e² + c² = ${square.g}² + ${square.e}² + ${square.c}² = ${square.g ** 2} + ${square.e ** 2} + ${square.c ** 2} = ${(square.g ** 2) + (square.e ** 2) + (square.c ** 2)}
+        
+        Check: ${isMagicSquareOfSquare(square) ? 'ok' : 'ko'}
     `);
 }
 
@@ -73,6 +75,7 @@ const ROOTS = new Map();
 for (let i = 0; i <= Math.ceil(Math.sqrt(2) * LIMIT); i++) {
     ROOTS.set(i ** 2, i);
 }
+const ROOT_ARRAY = Array.from(ROOTS.keys());
 
 const squares = [];
 
@@ -80,29 +83,36 @@ console.log('Searching up to e = ' + LIMIT + ' (or e² = ' + (LIMIT ** 2) + ')..
 console.time('Duration');
 progress.start(LIMIT, 0);
 
-// change the conditions n > 0 and m > 0 to n >= 0 and m >= 0 to include squares with recuring numbers
-ROOTS.forEach((e, eCube) => {
-    if (e <= LIMIT) {
+const LIMIT_CUBE = LIMIT ** 2;
+
+// Change the conditions n > 0 and m > 0 to n >= 0 and m >= 0 to include squares with recurring numbers.
+// Using for loop in reverse order and var because it's faster thant .forEach() and const/let.
+
+for (var x1 = ROOT_ARRAY.length - 1; x1 >= 0; x1--) {
+    var eCube = ROOT_ARRAY[x1];
+    if (eCube <= LIMIT_CUBE) {
         progress.increment();
-        ROOTS.forEach((a, aCube) => {
-            const n = aCube - eCube;
+        for (var x2 = ROOT_ARRAY.length - 1; x2 >= 0; x2--) {
+            var aCube = ROOT_ARRAY[x2];
+            var n = aCube - eCube;
             if (n > 0 && n <= eCube && ROOTS.has(eCube - n)) {
-                ROOTS.forEach((c, cCube) => {
-                    const m = cCube - eCube;
+                for (var x3 = ROOT_ARRAY.length - 1; x3 >= 0; x3--) {
+                    var cCube = ROOT_ARRAY[x3];
+                    var m = cCube - eCube;
                     if (m > 0 && m <= eCube && ROOTS.has(eCube - m)) {
                         if (ROOTS.has(eCube - n - m) && ROOTS.has(eCube - n + m) && ROOTS.has(eCube + n - m) && ROOTS.has(eCube + n + m)) {
                             squares.push({
-                                a,                           b: ROOTS.get(eCube - n - m), c,
-                                d: ROOTS.get(eCube - n + m), e,                           f: ROOTS.get(eCube + n - m),
+                                a: ROOTS.get(aCube),         b: ROOTS.get(eCube - n - m), c: ROOTS.get(cCube),
+                                d: ROOTS.get(eCube - n + m), e: ROOTS.get(eCube),         f: ROOTS.get(eCube + n - m),
                                 g: ROOTS.get(eCube - m),     h: ROOTS.get(eCube + n + m), i: ROOTS.get(eCube - n)
                             });
                         }
                     }
-                });
+                }
             }
-        });
+        }
     }
-});
+}
 
 progress.stop();
 squares.forEach(printSquare);
